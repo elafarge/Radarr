@@ -154,19 +154,19 @@ namespace NzbDrone.Core.Extras.Metadata.Consumers.Xbmc
 
                     details.Add(new XElement("sorttitle", movie.SortTitle));
 
-                    if (movie.Ratings != null && movie.Ratings.Votes > 0)
+                    if (movie.Ratings.Tmdb.Votes > 0)
                     {
                         var setRating = new XElement("ratings");
                         var setRatethemoviedb = new XElement("rating", new XAttribute("name", "themoviedb"), new XAttribute("max", "10"), new XAttribute("default", "true"));
-                        setRatethemoviedb.Add(new XElement("value", movie.Ratings.Value));
-                        setRatethemoviedb.Add(new XElement("votes", movie.Ratings.Votes));
+                        setRatethemoviedb.Add(new XElement("value", movie.Ratings.Tmdb.Value));
+                        setRatethemoviedb.Add(new XElement("votes", movie.Ratings.Tmdb.Votes));
                         setRating.Add(setRatethemoviedb);
                         details.Add(setRating);
                     }
 
-                    if (movie.Ratings != null && movie.Ratings.Votes > 0)
+                    if (movie.Ratings != null && movie.Ratings.Tmdb.Votes > 0)
                     {
-                        details.Add(new XElement("rating", movie.Ratings.Value));
+                        details.Add(new XElement("rating", movie.Ratings.Tmdb.Value));
                     }
 
                     details.Add(new XElement("userrating"));

@@ -452,9 +452,9 @@ class MovieDetails extends Component {
                       !!ratings &&
                         <span className={styles.rating}>
                           <HeartRating
-                            rating={ratings.value}
+                            ratings={ratings}
                             iconSize={20}
-                            hideHeart={isSmallScreen}
+                            hideIcon={isSmallScreen}
                           />
                         </span>
                     }
@@ -759,7 +759,7 @@ MovieDetails.propTypes = {
   year: PropTypes.number.isRequired,
   runtime: PropTypes.number.isRequired,
   certification: PropTypes.string,
-  ratings: PropTypes.object.isRequired,
+  ratings: PropTypes.arrayOf(PropTypes.object).isRequired,
   path: PropTypes.string.isRequired,
   sizeOnDisk: PropTypes.number.isRequired,
   qualityProfileId: PropTypes.number.isRequired,
@@ -799,6 +799,7 @@ MovieDetails.propTypes = {
 
 MovieDetails.defaultProps = {
   tags: [],
+  ratings: [],
   isSaving: false,
   sizeOnDisk: 0
 };

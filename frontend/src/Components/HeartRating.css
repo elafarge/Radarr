@@ -2,3 +2,10 @@
   margin-right: 5px;
   color: $themeRed;
 }
+
+.imdb {
+  align-content: center;
+  margin-right: 5px;
+  margin-bottom: 4px;
+  vertical-align: middle;
+}
