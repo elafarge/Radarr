@@ -1,0 +1,59 @@
+using System.Collections.Generic;
+using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
+using NzbDrone.Common.Extensions;
+using NzbDrone.Core.Restrictions;
+using Radarr.Http;
+using Radarr.Http.REST;
+using Radarr.Http.REST.Attributes;
+
+namespace Radarr.Api.V3.Restrictions
+{
+    [V3ApiController]
+    public class RestrictionController : RestController<RestrictionResource>
+    {
+        private readonly IRestrictionService _restrictionService;
+
+        public RestrictionController(IRestrictionService restrictionService)
+        {
+            _restrictionService = restrictionService;
+
+            SharedValidator.RuleFor(d => d).Custom((restriction, context) =>
+            {
+                if (restriction.Ignored.IsNullOrWhiteSpace() && restriction.Required.IsNullOrWhiteSpace())
+                {
+                    context.AddFailure("Either 'Must contain' or 'Must not contain' is required");
+                }
+            });
+        }
+
+        public override RestrictionResource GetResourceById(int id)
+        {
+            return _restrictionService.Get(id).ToResource();
+        }
+
+        [HttpGet]
+        public List<RestrictionResource> GetAll()
+        {
+            return _restrictionService.All().ToResource();
+        }
+
+        [RestPostById]
+        public int Create(RestrictionResource resource)
+        {
+            return _restrictionService.Add(resource.ToModel()).Id;
+        }
+
+        [RestPutById]
+        public void Update(RestrictionResource resource)
+        {
+            _restrictionService.Update(resource.ToModel());
+        }
+
+        [RestDeleteById]
+        public void DeleteRestriction(int id)
+        {
+            _restrictionService.Delete(id);
+        }
+    }
+}
