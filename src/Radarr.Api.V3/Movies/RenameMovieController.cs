@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using NzbDrone.Core.MediaFiles;
 using Radarr.Http;
-using Radarr.Http.REST;
 
 namespace Radarr.Api.V3.Movies
 {
     [V3ApiController("rename")]
-    public class RenameMovieController : RestController<RenameMovieResource>
+    public class RenameMovieController : Controller
     {
         private readonly IRenameMovieFileService _renameMovieFileService;
 
@@ -16,12 +16,8 @@ namespace Radarr.Api.V3.Movies
             _renameMovieFileService = renameMovieFileService;
         }
 
-        public override RenameMovieResource GetResourceById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        private List<RenameMovieResource> GetMovies(int movieId)
+        [HttpGet]
+        public List<RenameMovieResource> GetMovies(int movieId)
         {
             return _renameMovieFileService.GetRenamePreviews(movieId).ToResource();
         }
