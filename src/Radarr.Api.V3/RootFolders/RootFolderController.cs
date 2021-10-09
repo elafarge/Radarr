@@ -49,11 +49,11 @@ namespace Radarr.Api.V3.RootFolders
         }
 
         [RestPostById]
-        public int CreateRootFolder(RootFolderResource rootFolderResource)
+        public ActionResult<RootFolderResource> CreateRootFolder(RootFolderResource rootFolderResource)
         {
             var model = rootFolderResource.ToModel();
 
-            return _rootFolderService.Add(model).Id;
+            return Created(_rootFolderService.Add(model).Id);
         }
 
         [HttpGet]

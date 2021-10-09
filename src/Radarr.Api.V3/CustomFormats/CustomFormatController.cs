@@ -33,17 +33,19 @@ namespace Radarr.Api.V3.CustomFormats
         }
 
         [RestPostById]
-        public int Create(CustomFormatResource customFormatResource)
+        public ActionResult<CustomFormatResource> Create(CustomFormatResource customFormatResource)
         {
             var model = customFormatResource.ToModel(_specifications);
-            return _formatService.Insert(model).Id;
+            return Created(_formatService.Insert(model).Id);
         }
 
         [RestPutById]
-        public void Update(CustomFormatResource resource)
+        public ActionResult<CustomFormatResource> Update(CustomFormatResource resource)
         {
             var model = resource.ToModel(_specifications);
             _formatService.Update(model);
+
+            return Accepted(model.Id);
         }
 
         [HttpGet]

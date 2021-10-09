@@ -34,18 +34,18 @@ namespace Radarr.Api.V3.ImportLists
         }
 
         [RestPutById]
-        public void UpdateExclusion(ImportExclusionsResource exclusionResource)
+        public ActionResult<ImportExclusionsResource> UpdateExclusion(ImportExclusionsResource exclusionResource)
         {
             var model = exclusionResource.ToModel();
-            _exclusionService.Update(model);
+            return Accepted(_exclusionService.Update(model));
         }
 
         [RestPostById]
-        public int AddExclusion(ImportExclusionsResource exclusionResource)
+        public ActionResult<ImportExclusionsResource> AddExclusion(ImportExclusionsResource exclusionResource)
         {
             var model = exclusionResource.ToModel();
 
-            return _exclusionService.AddExclusion(model).Id;
+            return Created(_exclusionService.AddExclusion(model).Id);
         }
 
         [HttpPost("bulk")]

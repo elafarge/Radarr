@@ -19,10 +19,11 @@ namespace Radarr.Api.V3.Qualities
         }
 
         [RestPutById]
-        public void Update(QualityDefinitionResource resource)
+        public ActionResult<QualityDefinitionResource> Update(QualityDefinitionResource resource)
         {
             var model = resource.ToModel();
             _qualityDefinitionService.Update(model);
+            return Accepted(model.Id);
         }
 
         public override QualityDefinitionResource GetResourceById(int id)

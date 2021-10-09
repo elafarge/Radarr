@@ -94,7 +94,7 @@ namespace Radarr.Api.V3.MovieFiles
         }
 
         [RestPutById]
-        public void SetMovieFile(MovieFileResource movieFileResource)
+        public ActionResult<MovieFileResource> SetMovieFile(MovieFileResource movieFileResource)
         {
             var movieFile = _mediaFileService.GetMovie(movieFileResource.Id);
             movieFile.IndexerFlags = (IndexerFlags)movieFileResource.IndexerFlags;
@@ -112,6 +112,7 @@ namespace Radarr.Api.V3.MovieFiles
             }
 
             _mediaFileService.Update(movieFile);
+            return Accepted(movieFile.Id);
         }
 
         [HttpPut("editor")]

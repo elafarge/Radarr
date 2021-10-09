@@ -45,11 +45,11 @@ namespace Radarr.Api.V3.Profiles.Quality
         }
 
         [RestPostById]
-        public int Create(QualityProfileResource resource)
+        public ActionResult<QualityProfileResource> Create(QualityProfileResource resource)
         {
             var model = resource.ToModel();
             model = _profileService.Add(model);
-            return model.Id;
+            return Created(model.Id);
         }
 
         [RestDeleteById]
@@ -59,11 +59,13 @@ namespace Radarr.Api.V3.Profiles.Quality
         }
 
         [RestPutById]
-        public void Update(QualityProfileResource resource)
+        public ActionResult<QualityProfileResource> Update(QualityProfileResource resource)
         {
             var model = resource.ToModel();
 
             _profileService.Update(model);
+
+            return Accepted(model.Id);
         }
 
         public override QualityProfileResource GetResourceById(int id)

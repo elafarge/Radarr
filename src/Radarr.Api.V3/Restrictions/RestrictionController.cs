@@ -39,15 +39,16 @@ namespace Radarr.Api.V3.Restrictions
         }
 
         [RestPostById]
-        public int Create(RestrictionResource resource)
+        public ActionResult<RestrictionResource> Create(RestrictionResource resource)
         {
-            return _restrictionService.Add(resource.ToModel()).Id;
+            return Created(_restrictionService.Add(resource.ToModel()).Id);
         }
 
         [RestPutById]
-        public void Update(RestrictionResource resource)
+        public ActionResult<RestrictionResource> Update(RestrictionResource resource)
         {
             _restrictionService.Update(resource.ToModel());
+            return Accepted(resource.Id);
         }
 
         [RestDeleteById]
