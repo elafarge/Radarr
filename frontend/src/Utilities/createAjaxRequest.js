@@ -37,7 +37,7 @@ export default function createAjaxRequest(originalAjaxOptions) {
     }
   }
 
-  const ajaxOptions = { dataType: 'json', ...originalAjaxOptions };
+  const ajaxOptions = { ...originalAjaxOptions };
 
   if (isRelative(ajaxOptions)) {
     addRootUrl(ajaxOptions);
